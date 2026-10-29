@@ -1,6 +1,6 @@
 [project]
 name = "http-www-authenticate-kit"
-version = "0.1.0"
+version = "0.1.1"
 description = "A focused parser for HTTP WWW-Authenticate and Proxy-Authenticate headers."
 requires-python = ">=3.10"
 dependencies = []
