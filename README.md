@@ -33,3 +33,10 @@ The trade-off: the parser is permissive. It accepts malformed quoted-strings (e.
 ## The awkward edge
 
 The comma ambiguity is the edge. A header like `Basic realm="a, b", Bearer realm="c"` is parsed correctly because the comma inside the quoted string is preserved. But a header like `Newauth realm="x", type=1, Basic` is parsed as two challenges (`Newauth` with params `realm` and `type`, then `Basic`) — if `type` had been intended as a scheme, the grammar offers no way to tell. The rule used here: a token after a comma is a scheme unless it is followed by `=`. This matches the behaviour most HTTP clients adopt in practice.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
